@@ -1,6 +1,6 @@
 # Overview
 
-A general purpose Dart utility collection.
+A general purpose utility class collection for Dart and Flutter projects. 
 
 ## Usage
 
