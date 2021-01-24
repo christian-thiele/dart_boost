@@ -1,6 +1,6 @@
 name: boost
 description: General purpose Dart Utility Library
-version: 0.0.2-nullsafety
+version: 0.0.3-nullsafety
 homepage: https://github.com/christian-thiele/boost
 
 environment:
