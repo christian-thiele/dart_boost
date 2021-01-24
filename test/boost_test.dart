@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:boost/src/strings.dart';
 import 'package:boost/src/structures.dart';
 import 'package:test/test.dart';
 import 'package:boost/boost.dart';
@@ -8,6 +9,11 @@ void main() {
   group('Structures', () {
     test('Tuple', _tupleTest);
     test('Triple', _tripleTest);
+  });
+
+  group('Strings', () {
+    test('nullOrEmpty', _nullOrEmptyTest);
+    test('nullOrWhitespace', _nullOrWhitespaceTest);
   });
 
   group('Collections', () {
@@ -108,6 +114,26 @@ void _tripleTest() {
 
   expect(withB.withA(withA.a), equals(withA.withB(withB.b)));
   expect(withC.withA(withA.a), equals(withA.withC(withC.c)));
+}
+
+// Strings
+void _nullOrEmptyTest() {
+  expect(nullOrEmpty(''), isTrue);
+  expect(nullOrEmpty(null), isTrue);
+  expect(nullOrEmpty(' '), isFalse);
+  expect(nullOrEmpty('abc'), isFalse);
+  expect(nullOrEmpty('\t'), isFalse);
+  expect(nullOrEmpty('.'), isFalse);
+}
+
+void _nullOrWhitespaceTest() {
+  expect(nullOrEmpty(''), isTrue);
+  expect(nullOrEmpty(null), isTrue);
+  expect(nullOrEmpty(' '), isTrue);
+  expect(nullOrEmpty('\t '), isTrue);
+  expect(nullOrEmpty('\t'), isTrue);
+  expect(nullOrEmpty(' abc'), isFalse);
+  expect(nullOrEmpty('.'), isFalse);
 }
 
 // Collections
