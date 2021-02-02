@@ -11,3 +11,12 @@
 - ListExtension
   - replaceItem
   - sortBy
+
+## 0.0.3-nullsafety
+- Concurrency
+  - CancellationToken
+  - runGuarded
+- Notifier
+- String Utils
+  - nullOrEmpty
+  - nullOrWhitespace

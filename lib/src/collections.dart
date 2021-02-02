@@ -99,7 +99,7 @@ extension IterableExtension<TValue> on Iterable<TValue> {
   Iterable<Tuple<TValue?, TOther?>> zip<TOther>(Iterable<TOther> other) {
     return Iterable.generate(
         max(length, other.length),
-            (i) => Tuple(length > i ? elementAt(i) : null,
+        (i) => Tuple(length > i ? elementAt(i) : null,
             other.length > i ? other.elementAt(i) : null));
   }
 }
