@@ -1,5 +1,5 @@
 name: boost
-description: General purpose Dart Utility Library
+description: A general purpose utility class collection for Dart and Flutter projects.
 version: 0.0.3-nullsafety
 homepage: https://github.com/christian-thiele/boost
 
