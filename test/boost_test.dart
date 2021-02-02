@@ -127,13 +127,13 @@ void _nullOrEmptyTest() {
 }
 
 void _nullOrWhitespaceTest() {
-  expect(nullOrEmpty(''), isTrue);
-  expect(nullOrEmpty(null), isTrue);
-  expect(nullOrEmpty(' '), isTrue);
-  expect(nullOrEmpty('\t '), isTrue);
-  expect(nullOrEmpty('\t'), isTrue);
-  expect(nullOrEmpty(' abc'), isFalse);
-  expect(nullOrEmpty('.'), isFalse);
+  expect(nullOrWhitespace(''), isTrue);
+  expect(nullOrWhitespace(null), isTrue);
+  expect(nullOrWhitespace(' '), isTrue);
+  expect(nullOrWhitespace('\t '), isTrue);
+  expect(nullOrWhitespace('\t'), isTrue);
+  expect(nullOrWhitespace(' abc'), isFalse);
+  expect(nullOrWhitespace('.'), isFalse);
 }
 
 // Collections
