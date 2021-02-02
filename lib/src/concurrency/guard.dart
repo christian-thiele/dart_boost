@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:boost/src/concurrency/cancellation_token.dart';
-import 'package:pedantic/pedantic.dart';
 
 /// Describes the execution result of a function inside the
 /// [runGuarded] function.
