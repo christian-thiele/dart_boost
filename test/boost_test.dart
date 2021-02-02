@@ -1,7 +1,7 @@
+import 'dart:io';
 import 'dart:math';
 
-import 'package:boost/src/strings.dart';
-import 'package:boost/src/structures.dart';
+import 'package:pedantic/pedantic.dart';
 import 'package:test/test.dart';
 import 'package:boost/boost.dart';
 
@@ -33,6 +33,11 @@ void main() {
     test('isListOfType', _isListOfTypeTest);
     test('isMap', _isMapTest);
     test('isMapOfType', _isMapOfTypeTest);
+  });
+
+  group('Concurrency', () {
+    test('runGuarded', _runGuardedTest);
+    test('cancelOn', _cancelOnTest);
   });
 }
 
@@ -169,11 +174,13 @@ void _distinctTest() {
 void _groupByTest() {
   final people = ['Joe', 'Alex', 'Grace', 'Tina', 'Max'];
   final groups = people.groupBy((e) => e.length);
-  expect(groups, equals({
-    3: ['Joe', 'Max'],
-    4: ['Alex', 'Tina'],
-    5: ['Grace']
-  }));
+  expect(
+      groups,
+      equals({
+        3: ['Joe', 'Max'],
+        4: ['Alex', 'Tina'],
+        5: ['Grace']
+      }));
 }
 
 void _sequenceEqualsTest() {
@@ -279,4 +286,59 @@ void _isMapOfTypeTest() {
   expect(intDoubleMap.runtimeType.isMapOfType<dynamic, dynamic>(), isFalse);
   expect(intDoubleMap.runtimeType.isMapOfType<double, int>(), isFalse);
   expect(intDoubleMap.runtimeType.isMapOfType<int, int>(), isFalse);
+}
+
+// Concurrency
+Future _runGuardedTest() async {
+  //TODO extend test cases
+  final r = Random();
+  final asyncNoFailActions = Iterable.generate(
+      10,
+      (i) => (CancellationToken? token) =>
+          Future.delayed(Duration(milliseconds: r.nextInt(500))));
+  final asyncFailActions = Iterable.generate(
+      10,
+      (i) => (CancellationToken? token) async {
+            await Future.delayed(Duration(milliseconds: r.nextInt(500)));
+            // this is to avoid return type 'Never'
+            if (r.nextInt(10) < 20) {
+              throw Exception('Async Task $i failed successfully.');
+            }
+            return 'won\'t happen';
+          });
+
+  final syncNoFailActions = Iterable.generate(
+      10,
+      (i) => (CancellationToken? token) async {
+            sleep(Duration(milliseconds: r.nextInt(200)));
+            return 'result';
+          });
+
+  final syncFailActions = Iterable.generate(
+      10,
+      (i) => (CancellationToken? token) async {
+            sleep(Duration(milliseconds: r.nextInt(200)));
+            if (i > -5) {
+              throw Exception('Sync Task $i failed successfully.');
+            }
+            return 'result';
+          });
+
+  final guardResults1 =
+      await runGuarded(asyncNoFailActions.followedBy(asyncFailActions));
+  expect(guardResults1.map((e) => e.success), isNot(everyElement(isTrue)));
+
+  final guardResults2 = await runGuarded(syncNoFailActions);
+  expect(guardResults2.map((e) => e.success), everyElement(isTrue));
+
+  final guardResults3 = await runGuarded(syncFailActions);
+  expect(guardResults3.map((e) => e.error), everyElement(isNotNull));
+}
+
+Future _cancelOnTest() async {
+  final token = CancellationToken();
+  final future = Future.delayed(Duration(seconds: 3)).cancelOn(token);
+  unawaited(
+      Future.delayed(Duration(seconds: 1)).then((value) => token.cancel()));
+  expect(() async => await future, throwsA(isA<CanceledException>()));
 }
