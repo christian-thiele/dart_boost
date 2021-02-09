@@ -117,8 +117,9 @@ extension IterableExtension<TValue> on Iterable<TValue> {
       final value = selector(element);
       if (value == null) {
         throw BoostException('Selector for element ${element} returned null!');
-      }else if (value is! num) {
-        throw BoostException('Selector for element ${element} did not return num!');
+      } else if (value is! num) {
+        throw BoostException(
+            'Selector for element ${element} did not return num!');
       }
 
       if (minValue == null || value < minValue) {
@@ -134,7 +135,6 @@ extension IterableExtension<TValue> on Iterable<TValue> {
     return minObject;
   }
 
-
   /// Finds the element with the largest value selected by the selector function.
   ///
   /// All values returned by the selector must be of type num.
@@ -148,8 +148,9 @@ extension IterableExtension<TValue> on Iterable<TValue> {
       final value = selector(element);
       if (value == null) {
         throw BoostException('Selector for element ${element} returned null!');
-      }else if (value is! num) {
-        throw BoostException('Selector for element ${element} did not return num!');
+      } else if (value is! num) {
+        throw BoostException(
+            'Selector for element ${element} did not return num!');
       }
 
       if (maxValue == null || value > maxValue) {
