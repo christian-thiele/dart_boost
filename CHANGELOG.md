@@ -27,3 +27,5 @@
   - max
 - Math
   - round
+- Structures
+  - toJson for Tuples / Triples
