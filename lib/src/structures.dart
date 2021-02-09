@@ -16,6 +16,9 @@ class Tuple<Ta, Tb> {
 
     return super == other;
   }
+
+  /// Enables tuples to be serialized with JsonEncoder.
+  List toJson() => [a, b];
 }
 
 class Triple<Ta, Tb, Tc> {
@@ -39,4 +42,7 @@ class Triple<Ta, Tb, Tc> {
 
     return super == other;
   }
+
+  /// Enables triples to be serialized with JsonEncoder.
+  List toJson() => [a, b, c];
 }

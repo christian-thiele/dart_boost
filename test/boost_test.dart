@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -8,7 +9,9 @@ import 'package:boost/boost.dart';
 void main() {
   group('Structures', () {
     test('Tuple', _tupleTest);
+    test('Tuple to JSON', _tupleJsonTest);
     test('Triple', _tripleTest);
+    test('Triple to JSON', _tripleJsonTest);
   });
 
   group('Strings', () {
@@ -78,6 +81,13 @@ void _tupleTest() {
   expect(withB.withA(withA.a), equals(withA.withB(withB.b)));
 }
 
+void _tupleJsonTest() {
+  final tuple = Tuple(5, 'test');
+  expect(JsonEncoder().convert(tuple), equals('[5,"test"]'));
+  final tuple2 = Tuple(null, 'test');
+  expect(JsonEncoder().convert(tuple2), equals('[null,"test"]'));
+}
+
 void _tripleTest() {
   final dt = DateTime.now();
   final dt2 = dt.add(Duration(days: 1));
@@ -124,6 +134,13 @@ void _tripleTest() {
 
   expect(withB.withA(withA.a), equals(withA.withB(withB.b)));
   expect(withC.withA(withA.a), equals(withA.withC(withC.c)));
+}
+
+void _tripleJsonTest() {
+  final triple = Triple(5, 'test', true);
+  expect(JsonEncoder().convert(triple), equals('[5,"test",true]'));
+  final triple2 = Triple(null, 'test', false);
+  expect(JsonEncoder().convert(triple2), equals('[null,"test",false]'));
 }
 
 // Strings
