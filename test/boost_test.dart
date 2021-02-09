@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -8,7 +9,9 @@ import 'package:boost/boost.dart';
 void main() {
   group('Structures', () {
     test('Tuple', _tupleTest);
+    test('Tuple to JSON', _tupleJsonTest);
     test('Triple', _tripleTest);
+    test('Triple to JSON', _tripleJsonTest);
   });
 
   group('Strings', () {
@@ -26,6 +29,7 @@ void main() {
     test('zip', _zipTest);
     test('replaceItem', _replaceItemTest);
     test('sortBy', _sortByTest);
+    test('min / max', _minMaxTest);
   });
 
   group('Types', () {
@@ -33,6 +37,10 @@ void main() {
     test('isListOfType', _isListOfTypeTest);
     test('isMap', _isMapTest);
     test('isMapOfType', _isMapOfTypeTest);
+  });
+
+  group('Math', () {
+    test('round', _roundTest);
   });
 
   group('Concurrency', () {
@@ -71,6 +79,13 @@ void _tupleTest() {
   expect(tuple, equals(withA.withA(tuple.a)));
   expect(tuple, equals(withB.withB(tuple.b)));
   expect(withB.withA(withA.a), equals(withA.withB(withB.b)));
+}
+
+void _tupleJsonTest() {
+  final tuple = Tuple(5, 'test');
+  expect(JsonEncoder().convert(tuple), equals('[5,"test"]'));
+  final tuple2 = Tuple(null, 'test');
+  expect(JsonEncoder().convert(tuple2), equals('[null,"test"]'));
 }
 
 void _tripleTest() {
@@ -119,6 +134,13 @@ void _tripleTest() {
 
   expect(withB.withA(withA.a), equals(withA.withB(withB.b)));
   expect(withC.withA(withA.a), equals(withA.withC(withC.c)));
+}
+
+void _tripleJsonTest() {
+  final triple = Triple(5, 'test', true);
+  expect(JsonEncoder().convert(triple), equals('[5,"test",true]'));
+  final triple2 = Triple(null, 'test', false);
+  expect(JsonEncoder().convert(triple2), equals('[null,"test",false]'));
 }
 
 // Strings
@@ -251,6 +273,28 @@ void _sortByTest() {
   expect(list.map((e) => e.b), [2, 3, 4, 5, 8, 10]);
 }
 
+void _minMaxTest() {
+  final intList = <int>[1, 3, 56, 2, 4, 1, 85, 5, -23, 3, 0];
+  final doubleList = <double>[1.2, 3.4, 56.321, 2.0, 4.12, 5.6537, -23.34, 0.0];
+  final doubleListInf = <double>[double.infinity, double.nan, double.negativeInfinity, -23.34, 0.0];
+  final numList = <num>[3.4, 56.321, 2, 4.12, 12, 85.435, 5, -23.34, 3, 0.0];
+  final stringList = <String>['test', 'a', 'b', 'longword!', 'abcdefg'];
+
+  expect(intList.min(), equals(-23));
+  expect(intList.max(), equals(85));
+  expect(doubleList.min(), equals(-23.34));
+  expect(doubleList.max(), equals(56.321));
+  expect(doubleListInf.min(), equals(double.negativeInfinity));
+  expect(doubleListInf.max(), equals(double.infinity));
+  expect(numList.min(), equals(-23.34));
+  expect(numList.max(), equals(85.435));
+  expect(stringList.min((s) => s.length), equals('a'));
+  expect(stringList.max((s) => s.length), equals('longword!'));
+
+  expect(() => stringList.min(), throwsA(isA<BoostException>()));
+  expect(() => stringList.max(), throwsA(isA<BoostException>()));
+}
+
 // Types
 void _isListTest() {
   expect((int).isList, isFalse);
@@ -287,6 +331,26 @@ void _isMapOfTypeTest() {
   expect(intDoubleMap.runtimeType.isMapOfType<double, int>(), isFalse);
   expect(intDoubleMap.runtimeType.isMapOfType<int, int>(), isFalse);
 }
+
+// Math
+void _roundTest() {
+  expect(round(0), equals(0));
+  expect(round(10), equals(10));
+  expect(round(10, -2), equals(0));
+  expect(round(10, 2), equals(10));
+  expect(round(1.25, 1), equals(1.3));
+  expect(round(-1.25, 1), equals(-1.3));
+  expect(round(545, -1), equals(550));
+  expect(round(545, -2), equals(500));
+  expect(round(545, 0), equals(545));
+  expect(round(545, 2), equals(545));
+  expect(round(545, -3), equals(1000));
+
+  expect(round(double.infinity, 2), equals(double.infinity));
+  expect(round(double.negativeInfinity, 2), equals(double.negativeInfinity));
+  expect(round(double.nan, 2), isNaN);
+}
+
 
 // Concurrency
 Future _runGuardedTest() async {

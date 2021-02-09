@@ -1,3 +1,8 @@
+/// Structure for holding two values of independent types.
+///
+/// Tuples are immutable. If tuples are checked for equality,
+/// both of the values (a and b) of the tuple are checked for equality.
+/// Tuples can be serialized with JsonEncoder.
 class Tuple<Ta, Tb> {
   final Ta a;
   final Tb b;
@@ -16,8 +21,16 @@ class Tuple<Ta, Tb> {
 
     return super == other;
   }
+
+  /// Enables tuples to be serialized with JsonEncoder.
+  List toJson() => [a, b];
 }
 
+/// Structure for holding three values of independent types.
+///
+/// Triples are immutable. If triples are checked for equality,
+/// all of the values (a, b and c) of the triple are checked for equality.
+/// Triples can be serialized with JsonEncoder.
 class Triple<Ta, Tb, Tc> {
   final Ta a;
   final Tb b;
@@ -39,4 +52,7 @@ class Triple<Ta, Tb, Tc> {
 
     return super == other;
   }
+
+  /// Enables triples to be serialized with JsonEncoder.
+  List toJson() => [a, b, c];
 }

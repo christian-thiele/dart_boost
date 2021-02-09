@@ -20,3 +20,12 @@
 - String Utils
   - nullOrEmpty
   - nullOrWhitespace
+
+## 0.0.4-nullsafety
+- Collections
+  - min
+  - max
+- Math
+  - round
+- Structures
+  - toJson for Tuples / Triples
