@@ -255,6 +255,7 @@ void _sortByTest() {
 void _minMaxTest() {
   final intList = <int>[1, 3, 56, 2, 4, 1, 85, 5, -23, 3, 0];
   final doubleList = <double>[1.2, 3.4, 56.321, 2.0, 4.12, 5.6537, -23.34, 0.0];
+  final doubleListInf = <double>[double.infinity, 3.4, double.negativeInfinity, -23.34, 0.0];
   final numList = <num>[3.4, 56.321, 2, 4.12, 12, 85.435, 5, -23.34, 3, 0.0];
   final stringList = <String>['test', 'a', 'b', 'longword!', 'abcdefg'];
 
@@ -262,6 +263,8 @@ void _minMaxTest() {
   expect(intList.max(), equals(85));
   expect(doubleList.min(), equals(-23.34));
   expect(doubleList.max(), equals(56.321));
+  expect(doubleListInf.min(), equals(double.negativeInfinity));
+  expect(doubleListInf.max(), equals(double.infinity));
   expect(numList.min(), equals(-23.34));
   expect(numList.max(), equals(85.435));
   expect(stringList.min((s) => s.length), equals('a'));
