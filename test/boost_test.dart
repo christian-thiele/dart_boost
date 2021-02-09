@@ -26,6 +26,7 @@ void main() {
     test('zip', _zipTest);
     test('replaceItem', _replaceItemTest);
     test('sortBy', _sortByTest);
+    test('min / max', _minMaxTest);
   });
 
   group('Types', () {
@@ -249,6 +250,25 @@ void _sortByTest() {
 
   list.sortBy((e) => e.b);
   expect(list.map((e) => e.b), [2, 3, 4, 5, 8, 10]);
+}
+
+void _minMaxTest() {
+  final intList = <int>[1, 3, 56, 2, 4, 1, 85, 5, -23, 3, 0];
+  final doubleList = <double>[1.2, 3.4, 56.321, 2.0, 4.12, 5.6537, -23.34, 0.0];
+  final numList = <num>[3.4, 56.321, 2, 4.12, 12, 85.435, 5, -23.34, 3, 0.0];
+  final stringList = <String>['test', 'a', 'b', 'longword!', 'abcdefg'];
+
+  expect(intList.min(), equals(-23));
+  expect(intList.max(), equals(85));
+  expect(doubleList.min(), equals(-23.34));
+  expect(doubleList.max(), equals(56.321));
+  expect(numList.min(), equals(-23.34));
+  expect(numList.max(), equals(85.435));
+  expect(stringList.min((s) => s.length), equals('a'));
+  expect(stringList.max((s) => s.length), equals('longword!'));
+
+  expect(() => stringList.min(), throwsA(isA<BoostException>()));
+  expect(() => stringList.max(), throwsA(isA<BoostException>()));
 }
 
 // Types

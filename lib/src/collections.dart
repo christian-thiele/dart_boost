@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:math' as math;
 
 import 'package:boost/src/exceptions.dart';
 
@@ -26,7 +26,7 @@ extension IterableExtension<TValue> on Iterable<TValue> {
       return first; // supposed to trigger internal noElement exception
     }
 
-    return elementAt(Random().nextInt(length));
+    return elementAt(math.Random().nextInt(length));
   }
 
   /// Returns a subset of this [Iterable] containing every element whose key is
@@ -98,9 +98,71 @@ extension IterableExtension<TValue> on Iterable<TValue> {
   /// the missing counter part in the result [Tuple].
   Iterable<Tuple<TValue?, TOther?>> zip<TOther>(Iterable<TOther> other) {
     return Iterable.generate(
-        max(length, other.length),
+        math.max(length, other.length),
         (i) => Tuple(length > i ? elementAt(i) : null,
             other.length > i ? other.elementAt(i) : null));
+  }
+
+  /// Finds the element with the smallest value selected by the selector function.
+  ///
+  /// All values returned by the selector must be of type num.
+  /// If selector is null, the elements itself become the selected elements.
+  TValue min([Function(TValue)? selector]) {
+    selector ??= (e) => e;
+
+    TValue? minObject;
+    num? minValue;
+
+    for (final element in this) {
+      final value = selector(element);
+      if (value == null) {
+        throw BoostException('Selector for element ${element} returned null!');
+      }else if (value is! num) {
+        throw BoostException('Selector for element ${element} did not return num!');
+      }
+
+      if (minValue == null || value < minValue) {
+        minObject = element;
+        minValue = value;
+      }
+    }
+
+    if (minObject == null) {
+      throw BoostException('Iterable is empty.');
+    }
+
+    return minObject;
+  }
+
+
+  /// Finds the element with the largest value selected by the selector function.
+  ///
+  /// All values returned by the selector must be of type num.
+  /// If selector is null, the elements itself become the selected elements.
+  TValue max([Function(TValue)? selector]) {
+    selector ??= (e) => e;
+
+    TValue? maxObject;
+    num? maxValue;
+    for (final element in this) {
+      final value = selector(element);
+      if (value == null) {
+        throw BoostException('Selector for element ${element} returned null!');
+      }else if (value is! num) {
+        throw BoostException('Selector for element ${element} did not return num!');
+      }
+
+      if (maxValue == null || value > maxValue) {
+        maxObject = element;
+        maxValue = value;
+      }
+    }
+
+    if (maxObject == null) {
+      throw BoostException('Iterable is empty.');
+    }
+
+    return maxObject;
   }
 }
 
