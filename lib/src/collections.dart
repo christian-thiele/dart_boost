@@ -20,6 +20,12 @@ extension IterableExtension<TValue> on Iterable<TValue> {
   /// Returns the last element of the iterable if not empty, null otherwise.
   TValue? get lastOrNull => isNotEmpty ? last : null;
 
+  /// Returns the first element of the iterable which matches the selector,
+  /// null if none matches the selector or the iterable is empty.
+  TValue? firstOrNullWhere(bool Function(TValue) selector) {
+    return where(selector).firstOrNull;
+  }
+
   /// Returns a random element.
   TValue get random {
     if (isEmpty) {

@@ -21,6 +21,7 @@ void main() {
 
   group('Collections', () {
     test('whereNotNull', _whereNotNullTest);
+    test('firstWhereNotNull', _firstOrNullWhereTest);
     test('random', _randomTest);
     test('distinct', _distinctTest);
     test('groupBy', _groupByTest);
@@ -170,6 +171,16 @@ void _whereNotNullTest() {
   expect(result, isNot(contains(null)));
 }
 
+void _firstOrNullWhereTest() {
+  final list = [1, 3, 5, 7, -5, 25];
+  final result = list.firstOrNullWhere((e) => e > 5);
+  expect(result, equals(7));
+
+  final list2 = [1, 3, 5, 2, -5, -25];
+  final result2 = list2.firstOrNullWhere((e) => e > 5);
+  expect(result2, equals(null));
+}
+
 void _randomTest() {
   final intList = Iterable.generate(20, (i) => 'str$i');
   final results = Iterable.generate(10, (i) => intList.random);
@@ -276,7 +287,13 @@ void _sortByTest() {
 void _minMaxTest() {
   final intList = <int>[1, 3, 56, 2, 4, 1, 85, 5, -23, 3, 0];
   final doubleList = <double>[1.2, 3.4, 56.321, 2.0, 4.12, 5.6537, -23.34, 0.0];
-  final doubleListInf = <double>[double.infinity, double.nan, double.negativeInfinity, -23.34, 0.0];
+  final doubleListInf = <double>[
+    double.infinity,
+    double.nan,
+    double.negativeInfinity,
+    -23.34,
+    0.0
+  ];
   final numList = <num>[3.4, 56.321, 2, 4.12, 12, 85.435, 5, -23.34, 3, 0.0];
   final stringList = <String>['test', 'a', 'b', 'longword!', 'abcdefg'];
 
@@ -350,7 +367,6 @@ void _roundTest() {
   expect(round(double.negativeInfinity, 2), equals(double.negativeInfinity));
   expect(round(double.nan, 2), isNaN);
 }
-
 
 // Concurrency
 Future _runGuardedTest() async {
