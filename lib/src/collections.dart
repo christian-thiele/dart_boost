@@ -20,6 +20,12 @@ extension IterableExtension<TValue> on Iterable<TValue> {
   /// Returns the last element of the iterable if not empty, null otherwise.
   TValue? get lastOrNull => isNotEmpty ? last : null;
 
+  /// Returns the first element of the iterable which matches the selector,
+  /// null if none matches the selector or the iterable is empty.
+  TValue? firstOrNullWhere(bool Function(TValue) selector) {
+    return where(selector).firstOrNull;
+  }
+
   /// Returns a random element.
   TValue get random {
     if (isEmpty) {
@@ -117,8 +123,9 @@ extension IterableExtension<TValue> on Iterable<TValue> {
       final value = selector(element);
       if (value == null) {
         throw BoostException('Selector for element ${element} returned null!');
-      }else if (value is! num) {
-        throw BoostException('Selector for element ${element} did not return num!');
+      } else if (value is! num) {
+        throw BoostException(
+            'Selector for element ${element} did not return num!');
       }
 
       if (minValue == null || value < minValue) {
@@ -134,7 +141,6 @@ extension IterableExtension<TValue> on Iterable<TValue> {
     return minObject;
   }
 
-
   /// Finds the element with the largest value selected by the selector function.
   ///
   /// All values returned by the selector must be of type num.
@@ -148,8 +154,9 @@ extension IterableExtension<TValue> on Iterable<TValue> {
       final value = selector(element);
       if (value == null) {
         throw BoostException('Selector for element ${element} returned null!');
-      }else if (value is! num) {
-        throw BoostException('Selector for element ${element} did not return num!');
+      } else if (value is! num) {
+        throw BoostException(
+            'Selector for element ${element} did not return num!');
       }
 
       if (maxValue == null || value > maxValue) {

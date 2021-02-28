@@ -29,3 +29,7 @@
   - round
 - Structures
   - toJson for Tuples / Triples
+
+## 0.0.5-nullsafety
+- Collections
+  - firstOrNullWhere
