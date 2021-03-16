@@ -35,3 +35,5 @@
   - firstOrNullWhere
 
 ## 0.0.6-nullsafety
+- Collections
+  - whereIs

@@ -171,6 +171,11 @@ extension IterableExtension<TValue> on Iterable<TValue> {
 
     return maxObject;
   }
+
+  /// Returns an [Iterable] containing all elements that are assignable to
+  /// TCast while also casting those elements to that type.
+  Iterable<TCast> whereIs<TCast>() =>
+      where((element) => element is TCast).cast<TCast>();
 }
 
 extension ListExtension<TValue> on List<TValue> {
