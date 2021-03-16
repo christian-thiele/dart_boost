@@ -31,6 +31,7 @@ void main() {
     test('replaceItem', _replaceItemTest);
     test('sortBy', _sortByTest);
     test('min / max', _minMaxTest);
+    test('whereIs', _whereIsTest);
   });
 
   group('Types', () {
@@ -310,6 +311,16 @@ void _minMaxTest() {
 
   expect(() => stringList.min(), throwsA(isA<BoostException>()));
   expect(() => stringList.max(), throwsA(isA<BoostException>()));
+}
+
+void _whereIsTest() {
+  final list = ['test', 123, true, null, 'test2', 0.4, (a, b) => a + b];
+  expect(list.whereIs<String>(), orderedEquals(['test', 'test2']));
+  expect(list.whereIs<int>(), orderedEquals([123]));
+  expect(list.whereIs<num>(), orderedEquals([123, 0.4]));
+  expect(list.whereIs<bool>(), orderedEquals([true]));
+  expect(list.whereIs<Null>(), orderedEquals([null]));
+  expect(list.whereIs<double>(), orderedEquals([0.4]));
 }
 
 // Types
