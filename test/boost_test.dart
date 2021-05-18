@@ -332,7 +332,11 @@ void _tupleIterableTest() {
 }
 
 void _tripleIterableTest() {
-  final list = [Triple('1', 1, true), Triple('2', 2, 'abc'), Triple('3', 3, false)];
+  final list = [
+    Triple('1', 1, true),
+    Triple('2', 2, 'abc'),
+    Triple('3', 3, false)
+  ];
   expect(list.a, orderedEquals(['1', '2', '3']));
   expect(list.b, orderedEquals([1, 2, 3]));
   expect(list.c, orderedEquals([true, 'abc', false]));
