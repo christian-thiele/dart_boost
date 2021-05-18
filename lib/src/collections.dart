@@ -199,3 +199,24 @@ extension ListExtension<TValue> on List<TValue> {
         : Comparable.compare(selector(b), selector(a)));
   }
 }
+
+/// Extensions for Iterables of type [Tuple].
+extension TupleIterableExtension<Ta, Tb> on Iterable<Tuple<Ta, Tb>> {
+  /// Returns an iterable providing all [Tuple.a] values.
+  Iterable<Ta> get a => map((e) => e.a);
+
+  /// Returns an iterable providing all [Tuple.b] values.
+  Iterable<Tb> get b => map((e) => e.b);
+}
+
+/// Extensions for Iterables of type [Triple].
+extension TripleIterableExtension<Ta, Tb, Tc> on Iterable<Triple<Ta, Tb, Tc>> {
+  /// Returns an iterable providing all [Triple.a] values.
+  Iterable<Ta> get a => map((e) => e.a);
+
+  /// Returns an iterable providing all [Triple.b] values.
+  Iterable<Tb> get b => map((e) => e.b);
+
+  /// Returns an iterable providing all [Triple.c] values.
+  Iterable<Tc> get c => map((e) => e.c);
+}

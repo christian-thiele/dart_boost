@@ -37,3 +37,4 @@
 ## 0.0.6-nullsafety
 - Collections
   - whereIs
+  - a, b, c for tuple / triple iterables
