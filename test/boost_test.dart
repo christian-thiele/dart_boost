@@ -31,6 +31,9 @@ void main() {
     test('replaceItem', _replaceItemTest);
     test('sortBy', _sortByTest);
     test('min / max', _minMaxTest);
+    test('whereIs', _whereIsTest);
+    test('tuple a/b', _tupleIterableTest);
+    test('triple a/b/c', _tripleIterableTest);
   });
 
   group('Types', () {
@@ -310,6 +313,33 @@ void _minMaxTest() {
 
   expect(() => stringList.min(), throwsA(isA<BoostException>()));
   expect(() => stringList.max(), throwsA(isA<BoostException>()));
+}
+
+void _whereIsTest() {
+  final list = ['test', 123, true, null, 'test2', 0.4, (a, b) => a + b];
+  expect(list.whereIs<String>(), orderedEquals(['test', 'test2']));
+  expect(list.whereIs<int>(), orderedEquals([123]));
+  expect(list.whereIs<num>(), orderedEquals([123, 0.4]));
+  expect(list.whereIs<bool>(), orderedEquals([true]));
+  expect(list.whereIs<Null>(), orderedEquals([null]));
+  expect(list.whereIs<double>(), orderedEquals([0.4]));
+}
+
+void _tupleIterableTest() {
+  final list = [Tuple('1', 1), Tuple('2', 2), Tuple('3', 3)];
+  expect(list.a, orderedEquals(['1', '2', '3']));
+  expect(list.b, orderedEquals([1, 2, 3]));
+}
+
+void _tripleIterableTest() {
+  final list = [
+    Triple('1', 1, true),
+    Triple('2', 2, 'abc'),
+    Triple('3', 3, false)
+  ];
+  expect(list.a, orderedEquals(['1', '2', '3']));
+  expect(list.b, orderedEquals([1, 2, 3]));
+  expect(list.c, orderedEquals([true, 'abc', false]));
 }
 
 // Types

@@ -171,6 +171,11 @@ extension IterableExtension<TValue> on Iterable<TValue> {
 
     return maxObject;
   }
+
+  /// Returns an [Iterable] containing all elements that are assignable to
+  /// TCast while also casting those elements to that type.
+  Iterable<TCast> whereIs<TCast>() =>
+      where((element) => element is TCast).cast<TCast>();
 }
 
 extension ListExtension<TValue> on List<TValue> {
@@ -193,4 +198,25 @@ extension ListExtension<TValue> on List<TValue> {
         ? Comparable.compare(selector(a), selector(b))
         : Comparable.compare(selector(b), selector(a)));
   }
+}
+
+/// Extensions for Iterables of type [Tuple].
+extension TupleIterableExtension<Ta, Tb> on Iterable<Tuple<Ta, Tb>> {
+  /// Returns an iterable providing all [Tuple.a] values.
+  Iterable<Ta> get a => map((e) => e.a);
+
+  /// Returns an iterable providing all [Tuple.b] values.
+  Iterable<Tb> get b => map((e) => e.b);
+}
+
+/// Extensions for Iterables of type [Triple].
+extension TripleIterableExtension<Ta, Tb, Tc> on Iterable<Triple<Ta, Tb, Tc>> {
+  /// Returns an iterable providing all [Triple.a] values.
+  Iterable<Ta> get a => map((e) => e.a);
+
+  /// Returns an iterable providing all [Triple.b] values.
+  Iterable<Tb> get b => map((e) => e.b);
+
+  /// Returns an iterable providing all [Triple.c] values.
+  Iterable<Tc> get c => map((e) => e.c);
 }
