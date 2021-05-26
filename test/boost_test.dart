@@ -50,6 +50,7 @@ void main() {
   group('Concurrency', () {
     test('runGuarded', _runGuardedTest);
     test('cancelOn', _cancelOnTest);
+    test('semaphore', _semaphoreTest);
   });
 }
 
@@ -451,4 +452,22 @@ Future _cancelOnTest() async {
   unawaited(
       Future.delayed(Duration(seconds: 1)).then((value) => token.cancel()));
   expect(() async => await future, throwsA(isA<CanceledException>()));
+}
+
+Future _semaphoreTest() async {
+  final results = <int>[];
+  Future _someTask(int i, bool fail) async {
+    await Future.delayed(Duration(milliseconds: Random().nextInt(200)));
+    results.add(i);
+    if (fail) throw Exception();
+  }
+
+  final semaphore = Semaphore();
+  await semaphore.runLocked(() async => _someTask(1, false));
+  await semaphore.runLocked(() async => _someTask(2, false));
+  expect(() async => await semaphore.runLocked(() async => _someTask(3, true)),
+      throwsException);
+  await semaphore.runLocked(() async => _someTask(4, false));
+
+  expect(results, orderedEquals([1, 2, 3, 4]));
 }
