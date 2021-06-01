@@ -42,3 +42,7 @@
 ## 0.0.7-nullsafety
 - Concurrency
   - Semaphore
+
+## 0.0.8-nullsafety
+- Notifier
+  - addOneShot
