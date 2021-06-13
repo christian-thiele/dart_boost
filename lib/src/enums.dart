@@ -15,7 +15,7 @@ import 'package:boost/boost.dart';
 /// ```
 TEnum findEnum<TEnum>(String value, List<TEnum> values,
     {bool ignoreCase = false}) {
-  return tryFindEnum(value, values) ??
+  return tryFindEnum(value, values, ignoreCase: ignoreCase) ??
       (throw BoostException('Enum value "$value" not found.'));
 }
 
@@ -36,9 +36,9 @@ TEnum? tryFindEnum<TEnum>(String value, List<TEnum> values,
     {bool ignoreCase = false}) {
   for (final enumValue in values) {
     final str = enumValue.toString();
-    final enumName = str.substring(str.lastIndexOf('.'));
+    final enumName = str.substring(str.lastIndexOf('.') + 1);
     if ((ignoreCase && value.toLowerCase() == enumName.toLowerCase()) ||
-        value == enumValue) {
+        value == enumName) {
       return enumValue;
     }
   }

@@ -54,7 +54,7 @@ void _tryFindEnum() {
   expect(tryFindEnum('other', TestEnum.values, ignoreCase: true),
       equals(TestEnum.OTHER));
 
-  expect(() => tryFindEnum('testvalue', TestEnum.values), equals(null));
-  expect(() => tryFindEnum('ABC123', TestEnum.values), equals(null));
-  expect(() => tryFindEnum('something', TestEnum.values), equals(null));
+  expect(tryFindEnum('testvalue', TestEnum.values), equals(null));
+  expect(tryFindEnum('ABC123', TestEnum.values), equals(null));
+  expect(tryFindEnum('something', TestEnum.values), equals(null));
 }
