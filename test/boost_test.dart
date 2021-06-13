@@ -457,6 +457,12 @@ Future _cancelOnTest() async {
   unawaited(
       Future.delayed(Duration(seconds: 1)).then((value) => token.cancel()));
   expect(() async => await future, throwsA(isA<CanceledException>()));
+
+  final token2 = CancellationToken();
+  final future2 = Future.delayed(Duration(seconds: 1)).then((v) => 'x').cancelOn(token2);
+  await Future.delayed(Duration(seconds: 2));
+  token2.cancel();
+  expect(await future2, equals('x'));
 }
 
 Future _semaphoreTest() async {
