@@ -46,3 +46,8 @@
 ## 0.0.8-nullsafety
 - Notifier
   - addOneShot
+
+## 0.0.9-nullsafety
+- Enums
+  - findEnum
+  - tryFindEnum
