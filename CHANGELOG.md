@@ -48,3 +48,6 @@
   - addOneShot
 
 ## 0.0.9-nullsafety
+- Enums
+  - findEnum
+  - tryFindEnum
