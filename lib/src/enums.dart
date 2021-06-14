@@ -35,11 +35,16 @@ TEnum findEnum<TEnum>(String value, List<TEnum> values,
 TEnum? tryFindEnum<TEnum>(String value, List<TEnum> values,
     {bool ignoreCase = false}) {
   for (final enumValue in values) {
-    final str = enumValue.toString();
-    final enumName = str.substring(str.lastIndexOf('.') + 1);
-    if ((ignoreCase && value.toLowerCase() == enumName.toLowerCase()) ||
-        value == enumName) {
+    final name = enumName(enumValue);
+    if ((ignoreCase && value.toLowerCase() == name.toLowerCase()) ||
+        value == name) {
       return enumValue;
     }
   }
+}
+
+/// Returns the name of the given enum value.
+String enumName<TEnum>(TEnum value) {
+  final str = value.toString();
+  return str.substring(str.lastIndexOf('.') + 1);
 }
