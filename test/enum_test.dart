@@ -6,6 +6,7 @@ import 'package:test/test.dart';
 void main() {
   test('findEnum', _findEnum);
   test('tryFindEnum', _tryFindEnum);
+  test('enumName', _enumName);
 }
 
 enum TestEnum { abc123, TesTvAlUE, abc, x123, OTHER, other, oThEr }
@@ -57,4 +58,14 @@ void _tryFindEnum() {
   expect(tryFindEnum('testvalue', TestEnum.values), equals(null));
   expect(tryFindEnum('ABC123', TestEnum.values), equals(null));
   expect(tryFindEnum('something', TestEnum.values), equals(null));
+}
+
+void _enumName() {
+  expect(enumName(TestEnum.TesTvAlUE), equals('TesTvAlUE'));
+  expect(enumName(TestEnum.abc), equals('abc'));
+  expect(enumName(TestEnum.x123), equals('x123'));
+  expect(enumName(TestEnum.abc123), equals('abc123'));
+  expect(enumName(TestEnum.OTHER), equals('OTHER'));
+  expect(enumName(TestEnum.oThEr), equals('oThEr'));
+  expect(enumName(TestEnum.other), equals('other'));
 }

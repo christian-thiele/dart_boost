@@ -51,3 +51,7 @@
 - Enums
   - findEnum
   - tryFindEnum
+
+## 0.0.10-nullsafety
+- Enums
+  - enumName
