@@ -55,5 +55,3 @@
 ## 0.0.10-nullsafety
 - Enums
   - enumName
-  
-## 0.0.11-nullsafety
