@@ -42,4 +42,10 @@ jobs:
         run: dart test
         
       - name: Publish
-        run: dart pub publish -f
+        env:
+          accessToken: ${{ secrets.accessToken }}
+          refreshToken: ${{ secrets.refreshToken }}
+          tokenEndpoint: ${{ secrets.tokenEndpoint }}
+          scopes: ${{ secrets.scopes }}
+          expiration: ${{ secrets.expiration }}
+        run: sh ./ci_publish.sh
