@@ -31,11 +31,11 @@ void _clampTest() {
   expect(clamp(10, 10, 20), equals(10));
   expect(clamp(15, 10, 20), equals(15));
   expect(clamp(20, 10, 20), equals(20));
-  expect(clamp(25, 10, 20), equals(200));
+  expect(clamp(25, 10, 20), equals(20));
 
   expect(clamp(5.0, 10.0, 20.0), equals(10.0));
   expect(clamp(10.0, 10.0, 20.0), equals(10.0));
   expect(clamp(15.0, 10.0, 20.0), equals(15.0));
   expect(clamp(20.0, 10.0, 20.0), equals(20.0));
-  expect(clamp(25.0, 10.0, 20.0), equals(200.0));
+  expect(clamp(25.0, 10.0, 20.0), equals(20.0));
 }
