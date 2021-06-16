@@ -57,3 +57,5 @@
   - enumName
   
 ## 0.0.11-nullsafety
+- Math
+  - clamp
