@@ -8,7 +8,8 @@ import 'package:test/test.dart';
 void main() {
   test('runGuarded', _runGuardedTest);
   test('cancelOn', _cancelOnTest);
-  test('semaphore', _semaphoreTest);
+  test('Semaphore.runLocked', _semaphoreTest);
+  test('Semaphore.debounceLatest', _semaphoreTest);
 }
 
 Future _runGuardedTest() async {
@@ -88,4 +89,35 @@ Future _semaphoreTest() async {
   await semaphore.runLocked(() async => _someTask(4, false));
 
   expect(results, orderedEquals([1, 2, 3, 4]));
+}
+
+Future _semaphoreDebounceLatestTest() async {
+  final results = <int>[];
+  Future post(int x) async {
+    await Future.delayed(Duration(seconds: 1));
+    results.add(x);
+  }
+
+  final semaphore = Semaphore();
+  semaphore.debounceLatest(() async => await post(1));
+  semaphore.debounceLatest(() async => await post(2));
+  semaphore.debounceLatest(() async => await post(3));
+  semaphore.debounceLatest(() async => await post(4));
+  semaphore.debounceLatest(() async => await post(5));
+  await Future.delayed(Duration(seconds: 2));
+  semaphore.debounceLatest(() async => await post(6));
+  semaphore.debounceLatest(() async => await post(7));
+  semaphore.debounceLatest(() async => await post(8));
+  await Future.delayed(Duration(seconds: 2));
+  semaphore.debounceLatest(() async => await post(9),
+      delay: Duration(seconds: 1));
+  semaphore.debounceLatest(() async => await post(10),
+      delay: Duration(seconds: 1));
+  semaphore.debounceLatest(() async => await post(11),
+      delay: Duration(seconds: 1));
+  await Future.delayed(Duration(seconds: 2));
+  semaphore.debounceLatest(() async => await post(12),
+      delay: Duration(seconds: 1));
+
+  expect(results, orderedEquals([1, 5, 6, 8, 11, 12]));
 }

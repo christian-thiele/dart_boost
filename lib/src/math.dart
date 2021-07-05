@@ -1,4 +1,6 @@
-import 'dart:math';
+import 'dart:math' as math;
+
+import 'package:boost/boost.dart';
 
 /// Rounds to given digit count.
 ///
@@ -13,6 +15,16 @@ double round<T extends num>(T value, [int digits = 0]) {
     return value;
   }
 
-  final p = pow(10, 0 - digits);
+  final p = math.pow(10, 0 - digits);
   return ((value / p).round() * p).toDouble();
+}
+
+/// Clamps a value between a inclusive minimum and inclusive maximum.
+///
+/// [max] may not be smaller than [min].
+T clamp<T extends num>(T value, T min, T max) {
+  if (max < min) {
+    throw BoostException('Min must be smaller than max!');
+  }
+  return math.min(max, math.max(min, value));
 }

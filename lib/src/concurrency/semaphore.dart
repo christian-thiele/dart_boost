@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:boost/boost.dart';
+
 /// A semaphore prevents asynchronous code from being executed simultaneously.
 class Semaphore {
   Completer? completer;
+  Tuple<DateTime, FutureOr Function()>? _latest;
 
   bool get isLocked => !(completer?.isCompleted ?? true);
 
@@ -28,6 +31,30 @@ class Semaphore {
       return await job();
     } finally {
       release();
+    }
+  }
+
+  /// Function [job] is executed only if no other jobs are scheduled within
+  /// the [delay] period.
+  ///
+  /// Since this method cannot be awaited, exceptions will not thrown
+  /// to the caller so make sure to catch potential exceptions inside the [job].
+  void debounceLatest(FutureOr Function() job, {Duration? delay}) async {
+    final thisJob = Tuple(DateTime.now(), job);
+    _latest = thisJob;
+
+    if (delay != null) {
+      await Future.delayed(delay);
+    }
+
+    if (!isLocked) {
+      await runLocked(job);
+    } else {
+      await runLocked(() async {
+        if (_latest == thisJob) {
+          await job();
+        }
+      });
     }
   }
 
