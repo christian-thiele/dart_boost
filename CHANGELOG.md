@@ -61,3 +61,5 @@
   - clamp
 - Concurrency
   - Semaphore.debounceLatest
+  
+## 0.0.12-nullsafety
