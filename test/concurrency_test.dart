@@ -9,7 +9,8 @@ void main() {
   test('runGuarded', _runGuardedTest);
   test('cancelOn', _cancelOnTest);
   test('Semaphore.runLocked', _semaphoreTest);
-  test('Semaphore.debounceLatest', _semaphoreTest);
+  test('Semaphore.debounce', _semaphoreDebounceTest);
+  test('Semaphore.throttle', _semaphoreThrottleTest);
 }
 
 Future _runGuardedTest() async {
@@ -91,33 +92,57 @@ Future _semaphoreTest() async {
   expect(results, orderedEquals([1, 2, 3, 4]));
 }
 
-Future _semaphoreDebounceLatestTest() async {
+Future<int> Function() _post(List<int> results, int x) => () async {
+      await Future.delayed(Duration(milliseconds: 500));
+      results.add(x);
+      return x;
+    };
+
+Future _semaphoreThrottleTest() async {
   final results = <int>[];
-  Future post(int x) async {
-    await Future.delayed(Duration(seconds: 1));
-    results.add(x);
-  }
-
+  final returns = <int?>[];
+  final ret = (int? value) => returns.add(value);
   final semaphore = Semaphore();
-  semaphore.debounceLatest(() async => await post(1));
-  semaphore.debounceLatest(() async => await post(2));
-  semaphore.debounceLatest(() async => await post(3));
-  semaphore.debounceLatest(() async => await post(4));
-  semaphore.debounceLatest(() async => await post(5));
-  await Future.delayed(Duration(seconds: 2));
-  semaphore.debounceLatest(() async => await post(6));
-  semaphore.debounceLatest(() async => await post(7));
-  semaphore.debounceLatest(() async => await post(8));
-  await Future.delayed(Duration(seconds: 2));
-  semaphore.debounceLatest(() async => await post(9),
-      delay: Duration(seconds: 1));
-  semaphore.debounceLatest(() async => await post(10),
-      delay: Duration(seconds: 1));
-  semaphore.debounceLatest(() async => await post(11),
-      delay: Duration(seconds: 1));
-  await Future.delayed(Duration(seconds: 2));
-  semaphore.debounceLatest(() async => await post(12),
-      delay: Duration(seconds: 1));
 
-  expect(results, orderedEquals([1, 5, 6, 8, 11, 12]));
+  unawaited(semaphore.throttle(_post(results, 1)).then(ret));
+  unawaited(semaphore.throttle(_post(results, 2)).then(ret));
+  await Future.delayed(Duration(milliseconds: 100));
+  unawaited(semaphore.throttle(_post(results, 3)).then(ret));
+  unawaited(semaphore.throttle(_post(results, 4)).then(ret));
+  await Future.delayed(Duration(milliseconds: 410));
+  unawaited(semaphore.throttle(_post(results, 5)).then(ret));
+  unawaited(semaphore.throttle(_post(results, 6)).then(ret));
+  await Future.delayed(Duration(milliseconds: 510));
+
+  expect(results, orderedEquals([1, 5]));
+  expect(returns, orderedEquals([null, null, null, 1, null, 5]));
+}
+
+Future _semaphoreDebounceTest() async {
+  final results = <int>[];
+  final returns = <int?>[];
+  final ret = (int? value) => returns.add(value);
+  final semaphore = Semaphore();
+
+  await semaphore.debounce(_post(results, 1)).then(ret);
+  await Future.delayed(Duration(seconds: 1));
+  unawaited(semaphore.debounce(_post(results, 2)).then(ret));
+  unawaited(semaphore.debounce(_post(results, 3)).then(ret));
+  unawaited(semaphore.debounce(_post(results, 4)).then(ret));
+  await semaphore.debounce(_post(results, 5)).then(ret);
+  await Future.delayed(Duration(seconds: 1));
+  unawaited(semaphore.debounce(_post(results, 6)).then(ret));
+  await Future.delayed(Duration(milliseconds: 500));
+  unawaited(semaphore.debounce(_post(results, 7)).then(ret));
+  await Future.delayed(Duration(seconds: 1));
+  unawaited(semaphore
+      .debounce(_post(results, 8), delay: Duration(milliseconds: 500))
+      .then(ret));
+  await Future.delayed(Duration(milliseconds: 250));
+  await semaphore
+      .debounce(_post(results, 9), delay: Duration(milliseconds: 500))
+      .then(ret);
+
+  expect(results, orderedEquals([1, 5, 6, 7, 9]));
+  expect(returns, orderedEquals([1, null, null, null, 5, 6, 7, null, 9]));
 }

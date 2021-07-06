@@ -62,4 +62,10 @@
 - Concurrency
   - Semaphore.debounceLatest
   
-## 0.0.12-nullsafety
+## 1.0.0
+- First Major Release &#1F4AB;
+- _Breaking API change:_
+Semaphore.debounce() was renamed to Semaphore.throttle to match
+reactive conventions.
+Semaphore.debounce was added with correct debounce functionality.
+- fixed bug in Semaphore.debounce()
