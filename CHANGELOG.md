@@ -63,7 +63,7 @@
   - Semaphore.debounceLatest
   
 ## 1.0.0
-- First Major Release &#1F4AB;
+- First Major Release!
 - _Breaking API change:_
 Semaphore.debounce() was renamed to Semaphore.throttle to match
 reactive conventions.
