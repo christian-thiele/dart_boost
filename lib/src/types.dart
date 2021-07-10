@@ -54,6 +54,10 @@ extension TypeUtils on Type {
 /// WARNING:
 /// `isSubtypeOf<T, void>()`
 /// will always return true, since void is dynamic at runtime.
+///
+/// To check if T is void, use:
+/// `isSubtypeOf<void, T>()`
+/// which does not work for dynamic (as stated above).
 bool isSubtypeOf<T, TBase>() {
   return _TypeWrapper<T>() is _TypeWrapper<TBase>;
 }
