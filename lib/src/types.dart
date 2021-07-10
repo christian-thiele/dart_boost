@@ -50,6 +50,10 @@ extension TypeUtils on Type {
 
 /// Returns true if instance of [T] is applicable to TBase,
 /// as if you would check `new T() is TBase`.
+///
+/// WARNING:
+/// `isSubtypeOf<T, void>()`
+/// will always return true, since void is dynamic at runtime.
 bool isSubtypeOf<T, TBase>() {
   return _TypeWrapper<T>() is _TypeWrapper<TBase>;
 }

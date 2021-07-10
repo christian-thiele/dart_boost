@@ -52,8 +52,10 @@ void _isSubtypeOfTest() {
   expect(isSubtypeOf<String, dynamic>(), isTrue);
   expect(isSubtypeOf<List<int>, List<num>>(), isTrue);
   expect(isSubtypeOf<List<int>, List<dynamic>>(), isTrue);
+  expect(isSubtypeOf<void, void>(), isTrue);
 
   //false
   expect(isSubtypeOf<int, String>(), isFalse);
   expect(isSubtypeOf<num, int>(), isFalse);
+  expect(isSubtypeOf<void, String>(), isFalse);
 }
