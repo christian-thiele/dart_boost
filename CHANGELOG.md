@@ -71,3 +71,5 @@ Semaphore.debounce was added with correct debounce functionality.
 - fixed bug in Semaphore.debounce()
 
 ## 1.1.0
+- Types
+  - isSubtypeOf
