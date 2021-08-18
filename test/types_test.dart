@@ -6,6 +6,7 @@ void main() {
   test('isListOfType', _isListOfTypeTest);
   test('isMap', _isMapTest);
   test('isMapOfType', _isMapOfTypeTest);
+  test('isSubtypeOf', _isSubtypeOfTest);
 }
 
 void _isListTest() {
@@ -42,4 +43,19 @@ void _isMapOfTypeTest() {
   expect(intDoubleMap.runtimeType.isMapOfType<dynamic, dynamic>(), isFalse);
   expect(intDoubleMap.runtimeType.isMapOfType<double, int>(), isFalse);
   expect(intDoubleMap.runtimeType.isMapOfType<int, int>(), isFalse);
+}
+
+void _isSubtypeOfTest() {
+  // true
+  expect(isSubtypeOf<String, Object>(), isTrue);
+  expect(isSubtypeOf<int, num>(), isTrue);
+  expect(isSubtypeOf<String, dynamic>(), isTrue);
+  expect(isSubtypeOf<List<int>, List<num>>(), isTrue);
+  expect(isSubtypeOf<List<int>, List<dynamic>>(), isTrue);
+  expect(isSubtypeOf<void, void>(), isTrue);
+
+  //false
+  expect(isSubtypeOf<int, String>(), isFalse);
+  expect(isSubtypeOf<num, int>(), isFalse);
+  expect(isSubtypeOf<void, String>(), isFalse);
 }
