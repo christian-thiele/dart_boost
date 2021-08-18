@@ -73,3 +73,6 @@ Semaphore.debounce was added with correct debounce functionality.
 ## 1.1.0
 - Types
   - isSubtypeOf
+- Math
+  - toRadians
+  - toDegrees
