@@ -28,3 +28,13 @@ T clamp<T extends num>(T value, T min, T max) {
   }
   return math.min(max, math.max(min, value));
 }
+
+/// Converts degrees to radians.
+///
+/// 1° × π/180 = 0,01745 rad
+double toRadians(num degrees) => degrees * math.pi / 180.0;
+
+/// Converts radians to degrees.
+///
+/// 1 rad × 180/π = 57,296°
+double toDegrees(num radians) => radians * 180.0 / math.pi;

@@ -6,6 +6,7 @@ import 'package:test/test.dart';
 void main() {
   test('round', _roundTest);
   test('clamp', _clampTest);
+  test('deg <-> rad', _degRadTest);
 }
 
 void _roundTest() {
@@ -38,4 +39,19 @@ void _clampTest() {
   expect(clamp(15.0, 10.0, 20.0), equals(15.0));
   expect(clamp(20.0, 10.0, 20.0), equals(20.0));
   expect(clamp(25.0, 10.0, 20.0), equals(20.0));
+}
+
+void _degRadTest() {
+  final values = {
+    0: 0,
+    90: 1.5707963267948966,
+    180: 3.141592653589793,
+    360: 6.283185307179586,
+    720: 12.566370614359172,
+  };
+
+  for (final pair in values.entries) {
+    expect(toRadians(pair.key), pair.value);
+    expect(toDegrees(pair.value), pair.key);
+  }
 }
