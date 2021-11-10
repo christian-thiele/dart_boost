@@ -39,6 +39,9 @@ void _tupleTest() {
   expect(tuple, equals(withA.withA(tuple.a)));
   expect(tuple, equals(withB.withB(tuple.b)));
   expect(withB.withA(withA.a), equals(withA.withB(withB.b)));
+
+  // factory
+  expect(Tuple.factory(5, 'a'), equals(Tuple(5, 'a')));
 }
 
 void _tupleJsonTest() {
@@ -94,6 +97,9 @@ void _tripleTest() {
 
   expect(withB.withA(withA.a), equals(withA.withB(withB.b)));
   expect(withC.withA(withA.a), equals(withA.withC(withC.c)));
+
+  // factory
+  expect(Triple.factory(5, 'a', true), equals(Triple(5, 'a', true)));
 }
 
 void _tripleJsonTest() {
