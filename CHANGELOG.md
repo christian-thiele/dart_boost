@@ -82,3 +82,6 @@ Semaphore.debounce was added with correct debounce functionality.
 ## 1.3.0
 - Tuple.factory
 - Triple.factory
+
+## 1.3.0
+- ConfigParser
