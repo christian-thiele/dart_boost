@@ -1,6 +1,7 @@
 library boost;
 
 export 'src/collections.dart';
+export 'src/config.dart';
 export 'src/enums.dart';
 export 'src/exceptions.dart';
 export 'src/math.dart';
