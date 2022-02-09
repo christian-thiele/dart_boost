@@ -16,7 +16,8 @@ void _parseConfig() {
     ..addOption('int', abbr: 'i', type: int)
     ..addOption('double', abbr: 'd', type: double, environment: 'SOME_DOUBLE')
     ..addOption('bool', abbr: 'b', type: bool)
-    ..addOption('other', abbr: 'o', type: int, environment: 'TEST_OTHER');
+    ..addOption('other', abbr: 'o', type: int, environment: 'TEST_OTHER')
+    ..addOption('otherStr', abbr: 'x', type: String, environment: 'TEST_OTHER_STR');
 
   final vars = config.parse([
     '--string',
@@ -28,7 +29,7 @@ void _parseConfig() {
     '--bool',
     '"TRUE"',
     '-d',
-    '2.4556'
+    '2.4556',
   ]);
 
   expect(
@@ -39,6 +40,7 @@ void _parseConfig() {
         'double': 2.4556,
         'bool': true,
         'other': null,
+        'otherStr': null,
       }));
 }
 
@@ -56,7 +58,7 @@ void _throwInvalid() {
       throwsA(isA<BoostException>()));
 
   expect(
-      () => config.parse(['-string', 'abc']), throwsA(isA<BoostException>()));
+          () => config.parse(['-string', 'abc']), throwsA(isA<BoostException>()));
 
   expect(() => config.parse(['--i', '20']), throwsA(isA<BoostException>()));
 

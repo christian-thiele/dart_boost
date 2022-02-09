@@ -70,7 +70,7 @@ class ConfigParser {
       }
 
       if (param.type == String) {
-        values[param.name] = raw.toString();
+        values[param.name] = raw?.toString();
       } else if (param.type == int) {
         if (raw is int) {
           values[param.name] = raw;
