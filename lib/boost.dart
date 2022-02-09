@@ -1,5 +1,6 @@
 library boost;
 
+export 'src/bytes.dart';
 export 'src/collections.dart';
 export 'src/config.dart';
 export 'src/enums.dart';

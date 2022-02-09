@@ -83,5 +83,9 @@ Semaphore.debounce was added with correct debounce functionality.
 - Tuple.factory
 - Triple.factory
 
-## 1.3.0
+## 1.4.0
 - ConfigParser
+
+## 1.5.0
+- Bytes
+  - toHexString
