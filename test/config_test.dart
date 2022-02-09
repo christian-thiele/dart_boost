@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:math';
-
 import 'package:boost/boost.dart';
 import 'package:test/test.dart';
 
@@ -17,7 +14,8 @@ void _parseConfig() {
     ..addOption('double', abbr: 'd', type: double, environment: 'SOME_DOUBLE')
     ..addOption('bool', abbr: 'b', type: bool)
     ..addOption('other', abbr: 'o', type: int, environment: 'TEST_OTHER')
-    ..addOption('otherStr', abbr: 'x', type: String, environment: 'TEST_OTHER_STR');
+    ..addOption('otherStr',
+        abbr: 'x', type: String, environment: 'TEST_OTHER_STR');
 
   final vars = config.parse([
     '--string',
@@ -58,7 +56,7 @@ void _throwInvalid() {
       throwsA(isA<BoostException>()));
 
   expect(
-          () => config.parse(['-string', 'abc']), throwsA(isA<BoostException>()));
+      () => config.parse(['-string', 'abc']), throwsA(isA<BoostException>()));
 
   expect(() => config.parse(['--i', '20']), throwsA(isA<BoostException>()));
 
