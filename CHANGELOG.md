@@ -93,3 +93,7 @@ Semaphore.debounce was added with correct debounce functionality.
 ## 1.5.1
 - Config
   - fixed null handling for string arguments
+
+## 1.5.2
+- CancellationToken
+  - cancelOn: fixed "Future already completed" exception when calling cancel() after target Future completed

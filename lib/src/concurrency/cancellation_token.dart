@@ -58,7 +58,9 @@ extension CancelableFuture<T> on Future<T> {
 
     final comp = Completer<T>();
     final key = cancellationToken.attach(([e]) {
-      comp.completeError(e ?? CanceledException());
+      if (!comp.isCompleted) {
+        comp.completeError(e ?? CanceledException());
+      }
     });
 
     then((value) {
