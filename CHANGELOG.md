@@ -97,3 +97,6 @@ Semaphore.debounce was added with correct debounce functionality.
 ## 1.5.2
 - CancellationToken
   - cancelOn: fixed "Future already completed" exception when calling cancel() after target Future completed
+
+## 1.6.0
+- Version
