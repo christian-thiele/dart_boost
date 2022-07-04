@@ -48,7 +48,7 @@ void _isMapOfTypeTest() {
   expect(jsonMap.isMapOf<String, String>(), isFalse);
 
   expect(intDoubleMap.isMapOf<int, double>(), isTrue);
-  expect(intDoubleMap.isMapOf<dynamic, dynamic>(), isFalse);
+  expect(intDoubleMap.isMapOf<dynamic, dynamic>(), isTrue);
   expect(intDoubleMap.isMapOf<double, int>(), isFalse);
   expect(intDoubleMap.isMapOf<int, int>(), isFalse);
 
