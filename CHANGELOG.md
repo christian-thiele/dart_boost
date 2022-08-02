@@ -1,7 +1,11 @@
-## 1.7.0
+## 1.8.0
 - min Dart version is now 2.17.0
 - removed enumName (this is now dart core functionality)
 - cleaner findEnum / tryFindEnum implementation
+
+## 1.7.0
+- TypeCheck replaces Type extension methods
+  - this fixes flutter web compatibility
 
 ## 1.6.0
 - Version (a semver version util)
