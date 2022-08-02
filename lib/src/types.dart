@@ -1,63 +1,29 @@
-// collection of utility methods for generic classes and functions
+/// A utility class for checking type parameters.
+class TypeCheck<T> {
+  /// Checks if [T] is a [List] of any type.
+  ///
+  /// See [isSubtypeOf] for further info.
+  bool get isList => isSubtypeOf<List>();
 
-final _typeListRegex = RegExp('^List(<(.*)>)?\$');
-final _typeMapRegex = RegExp('^(_\\w*)?Map(<(.*), (.*)>)?\$');
+  /// Checks if [T] is a [Map] of any type.
+  ///
+  /// See [isSubtypeOf] for further info.
+  bool get isMap => isSubtypeOf<Map>();
 
-class _TypeWrapper<T> {}
+  bool isListOf<E>() => isSubtypeOf<List<E>>();
+  bool isMapOf<K, V>() => isSubtypeOf<Map<K, V>>();
 
-extension TypeUtils on Type {
-  bool get isList {
-    final typeStr = toString();
-    return _typeListRegex.hasMatch(typeStr);
+  /// Returns true if instance of [T] is applicable to [TBase],
+  /// as if you would check `new T() is TBase`.
+  ///
+  /// WARNING:
+  /// `isSubtypeOf<T, void>()`
+  /// will always return true, since void is dynamic at runtime.
+  ///
+  /// To check if T is void, use:
+  /// `isSubtypeOf<void, T>()`
+  /// which does not work for dynamic (as stated above).
+  bool isSubtypeOf<TBase>() {
+    return this is TypeCheck<TBase>;
   }
-
-  bool get isMap {
-    final typeStr = toString();
-    return _typeMapRegex.hasMatch(typeStr);
-  }
-
-  bool isListOfType<TValue>() {
-    final typeStr = toString();
-    final match = _typeListRegex.firstMatch(typeStr);
-
-    if (match == null) {
-      return false;
-    }
-
-    if (match.groupCount < 2) {
-      return false;
-    }
-
-    return match.group(2) == TValue.toString();
-  }
-
-  bool isMapOfType<TKey, TValue>() {
-    final typeStr = toString();
-    final match = _typeMapRegex.firstMatch(typeStr);
-
-    if (match == null) {
-      return false;
-    }
-
-    if (match.groupCount < 4) {
-      return false;
-    }
-
-    return match.group(3) == TKey.toString() &&
-        match.group(4) == TValue.toString();
-  }
-}
-
-/// Returns true if instance of [T] is applicable to TBase,
-/// as if you would check `new T() is TBase`.
-///
-/// WARNING:
-/// `isSubtypeOf<T, void>()`
-/// will always return true, since void is dynamic at runtime.
-///
-/// To check if T is void, use:
-/// `isSubtypeOf<void, T>()`
-/// which does not work for dynamic (as stated above).
-bool isSubtypeOf<T, TBase>() {
-  return _TypeWrapper<T>() is _TypeWrapper<TBase>;
 }
