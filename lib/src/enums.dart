@@ -13,7 +13,7 @@ import 'package:boost/boost.dart';
 /// ...
 /// final value = findEnum('second', MyEnum.values);
 /// ```
-TEnum findEnum<TEnum>(String value, List<TEnum> values,
+TEnum findEnum<TEnum extends Enum>(String value, List<TEnum> values,
     {bool ignoreCase = false}) {
   return tryFindEnum(value, values, ignoreCase: ignoreCase) ??
       (throw BoostException('Enum value "$value" not found.'));
@@ -32,19 +32,14 @@ TEnum findEnum<TEnum>(String value, List<TEnum> values,
 /// ...
 /// final value = tryFindEnum('second', MyEnum.values);
 /// ```
-TEnum? tryFindEnum<TEnum>(String value, List<TEnum> values,
+TEnum? tryFindEnum<TEnum extends Enum>(String value, List<TEnum> values,
     {bool ignoreCase = false}) {
   for (final enumValue in values) {
-    final name = enumName(enumValue);
-    if ((ignoreCase && value.toLowerCase() == name.toLowerCase()) ||
-        value == name) {
+    if ((ignoreCase && value.toLowerCase() == enumValue.name.toLowerCase()) ||
+        value == enumValue.name) {
       return enumValue;
     }
   }
-}
 
-/// Returns the name of the given enum value.
-String enumName<TEnum>(TEnum value) {
-  final str = value.toString();
-  return str.substring(str.lastIndexOf('.') + 1);
+  return null;
 }
