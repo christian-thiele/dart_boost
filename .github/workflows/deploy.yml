@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CD
+name: Deploy Package
 
 # Controls when the action will run. 
 on:
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image:  google/dart:beta
+      image:  google/dart:2.17
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
