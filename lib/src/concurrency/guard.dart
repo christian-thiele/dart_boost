@@ -35,18 +35,16 @@ Future<List<GuardResult>> runGuarded(
   for (final action in actions) {
     try {
       final future = action(cancel);
-      if (future is Future) {
-        switch (executionMode) {
-          case ExecutionMode.Serial:
-            results.add(GuardResult(result: await future.cancelOn(cancel)));
-            break;
-          case ExecutionMode.Concurrent:
-            tasks.add(future
-                .then((value) => results.add(GuardResult(result: value)))
-                .catchError((e, stack) =>
-                    results.add(GuardResult(error: e, stackTrace: stack))));
-            break;
-        }
+      switch (executionMode) {
+        case ExecutionMode.Serial:
+          results.add(GuardResult(result: await future.cancelOn(cancel)));
+          break;
+        case ExecutionMode.Concurrent:
+          tasks.add(future
+              .then((value) => results.add(GuardResult(result: value)))
+              .catchError((e, stack) =>
+                  results.add(GuardResult(error: e, stackTrace: stack))));
+          break;
       }
     } catch (e, stack) {
       results.add(GuardResult(error: e, stackTrace: stack));

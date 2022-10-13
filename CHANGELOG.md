@@ -1,3 +1,8 @@
+## 1.8.1
+- TypeCheck
+  - added isNullable, isIterable, toNullable, toList, toIterable, isSupertypeOf
+- fixed warnings
+
 ## 1.8.0
 - min Dart version is now 2.17.0
 - removed enumName (this is now dart core functionality)

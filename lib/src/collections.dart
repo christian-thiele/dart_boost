@@ -122,10 +122,10 @@ extension IterableExtension<TValue> on Iterable<TValue> {
     for (final element in this) {
       final value = selector(element);
       if (value == null) {
-        throw BoostException('Selector for element ${element} returned null!');
+        throw BoostException('Selector for element $element returned null!');
       } else if (value is! num) {
         throw BoostException(
-            'Selector for element ${element} did not return num!');
+            'Selector for element $element did not return num!');
       }
 
       if (minValue == null || value < minValue) {
@@ -153,10 +153,10 @@ extension IterableExtension<TValue> on Iterable<TValue> {
     for (final element in this) {
       final value = selector(element);
       if (value == null) {
-        throw BoostException('Selector for element ${element} returned null!');
+        throw BoostException('Selector for element $element returned null!');
       } else if (value is! num) {
         throw BoostException(
-            'Selector for element ${element} did not return num!');
+            'Selector for element $element did not return num!');
       }
 
       if (maxValue == null || value > maxValue) {
