@@ -1,3 +1,7 @@
+## 1.8.4
+- TypeChecker
+  - const constructor
+
 ## 1.8.3
 - fixed barrel file
 

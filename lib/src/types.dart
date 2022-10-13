@@ -1,5 +1,7 @@
 /// A utility class for checking type parameters.
 class TypeCheck<T> {
+  const TypeCheck();
+
   /// Checks if [T] is nullable.
   ///
   /// [Void], [dynamic] and [Null] will always return true.
