@@ -1,3 +1,6 @@
+## 1.8.3
+- fixed barrel file
+
 ## 1.8.2
 - IntListExtension
   - asUint8List
