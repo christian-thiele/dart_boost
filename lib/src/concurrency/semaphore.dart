@@ -44,6 +44,8 @@ class Semaphore {
       if (_scheduledKey == key) {
         _scheduledKey = null;
         return await job();
+      } else {
+        return null;
       }
     });
   }
