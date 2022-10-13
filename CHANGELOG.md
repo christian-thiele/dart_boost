@@ -1,3 +1,10 @@
+## 1.8.2
+- IntListExtension
+  - asUint8List
+- IntListStreamExtension
+  - asUint8List
+- apply
+
 ## 1.8.1
 - TypeCheck
   - added isNullable, isIterable, toNullable, toList, toIterable, isSupertypeOf
