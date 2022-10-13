@@ -1,6 +1,6 @@
 name: boost
 description: A general purpose utility class collection for Dart and Flutter projects.
-version: 1.8.3
+version: 1.8.4
 homepage: https://github.com/christian-thiele/boost
 
 environment:
