@@ -70,9 +70,7 @@ class TypeCheck<T> {
   /// `isSubtypeOf<void, T>()`
   /// which does not work for dynamic (as stated above).
   bool isSupertypeOf<TSub>() {
-    final result = TypeCheck<TSub>() is TypeCheck<T>;
-    print('$TSub is $T == $result');
-    return result;
+    return TypeCheck<TSub>() is TypeCheck<T>;
   }
 
   @override
