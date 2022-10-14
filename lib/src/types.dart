@@ -2,6 +2,9 @@
 class TypeCheck<T> {
   const TypeCheck();
 
+  /// Returns the name of the [T].
+  String get name => T.toString();
+
   /// Checks if [T] is nullable.
   ///
   /// [Void], [dynamic] and [Null] will always return true.
@@ -45,6 +48,9 @@ class TypeCheck<T> {
   /// If [T] is nullable, the result will be the same as this.
   TypeCheck<T?> get toNullable => TypeCheck<T?>();
 
+  /// Returns true if [TOther] is exactly [T].
+  bool isExact<TOther>() => T == TOther;
+
   /// Returns true if instance of [T] is applicable to [TSuper],
   /// as if you would check `new T() is TSuper`.
   ///
@@ -79,5 +85,5 @@ class TypeCheck<T> {
   int get hashCode => T.hashCode;
 
   @override
-  bool operator ==(Object other) => other.hashCode == hashCode;
+  bool operator ==(Object other) => other is TypeCheck && other.isExact<T>();
 }
