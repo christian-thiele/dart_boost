@@ -158,6 +158,14 @@ void _equalityTest() {
   expect(TypeCheck<List>(), isNot(TypeCheck<List<String>>()));
   expect(TypeCheck<List<String>>(), isNot(TypeCheck<List>()));
 
+  expect(TypeCheck<double>(), isNot(TypeCheck<String?>()));
+  expect(TypeCheck<double?>(), isNot(TypeCheck<String>()));
+  expect(TypeCheck<double>(), isNot(TypeCheck<String>()));
+  expect(TypeCheck<double?>(), isNot(TypeCheck<String?>()));
+
+  expect(TypeCheck<double?>(), isNot(TypeCheck<void>()));
+  expect(TypeCheck<void>(), isNot(TypeCheck<String?>()));
+
   expect(TypeCheck<void>(), equals(TypeCheck<void>()));
   expect(TypeCheck<void>(), isNot(TypeCheck<dynamic>()));
   expect(TypeCheck<void>(), isNot(TypeCheck<Null>()));

@@ -1,3 +1,8 @@
+## 1.8.5
+- TypeChecker
+  - isExact, name
+  - fixed equality
+
 ## 1.8.4
 - TypeChecker
   - const constructor
