@@ -16,4 +16,5 @@ export 'src/version.dart';
 export 'src/concurrency/canceled_exception.dart';
 export 'src/concurrency/cancellation_token.dart';
 export 'src/concurrency/guard.dart';
+export 'src/concurrency/lazy.dart';
 export 'src/concurrency/semaphore.dart';
