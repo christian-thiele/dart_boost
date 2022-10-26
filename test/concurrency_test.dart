@@ -11,6 +11,7 @@ void main() {
   test('Semaphore.runLocked', _semaphoreTest);
   test('Semaphore.debounce', _semaphoreDebounceTest);
   test('Semaphore.throttle', _semaphoreThrottleTest);
+  test('Lazy', _lazyTest, timeout: Timeout.none);
 }
 
 Future _runGuardedTest() async {
@@ -83,7 +84,7 @@ Future _semaphoreTest() async {
   }
 
   final semaphore = Semaphore();
-  await semaphore.runLocked(() async => _someTask(1, false));
+  unawaited(semaphore.runLocked(() async => _someTask(1, false)));
   await semaphore.runLocked(() async => _someTask(2, false));
   expect(() async => await semaphore.runLocked(() async => _someTask(3, true)),
       throwsException);
@@ -145,4 +146,27 @@ Future _semaphoreDebounceTest() async {
 
   expect(results, orderedEquals([1, 5, 6, 7, 9]));
   expect(returns, orderedEquals([1, null, null, null, 5, 6, 7, null, 9]));
+}
+
+Future<void> _lazyTest() async {
+  final lazy = Lazy(() async {
+    await Future.delayed(const Duration(seconds: 1));
+    return Random().nextInt(1024);
+  });
+
+  final results = await Future.wait(
+      [lazy.get(), lazy.get(), lazy.get(), lazy.get(), lazy.get()]);
+
+  expect(results.length, equals(5));
+  expect(results, everyElement(equals(results.first)));
+
+  final errorLazy = Lazy(() async {
+    await Future.delayed(const Duration(seconds: 1));
+    throw Exception('Nope');
+  });
+
+  expect(errorLazy.get, throwsA(isA<Exception>()));
+  expect(errorLazy.get, throwsA(isA<Exception>()));
+  expect(errorLazy.get, throwsA(isA<Exception>()));
+  expect(errorLazy.get, throwsA(isA<Exception>()));
 }

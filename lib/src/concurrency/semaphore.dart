@@ -58,6 +58,7 @@ class Semaphore {
     if (completer != null) {
       await completer!.future;
       await lock();
+      return;
     }
     completer = Completer();
   }
@@ -67,7 +68,8 @@ class Semaphore {
   /// This is only necessary for special use cases in conjunction with [lock].
   /// Most of the time [runLocked], [debounce] or [throttle] should be preferred.
   void release() {
-    completer?.complete();
+    final temp = completer;
     completer = null;
+    temp?.complete();
   }
 }

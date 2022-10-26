@@ -1,3 +1,8 @@
+## 1.8.6
+- Lazy
+- Semaphore
+  - fixed synchronous deadlock bug
+
 ## 1.8.5
 - TypeChecker
   - isExact, name
