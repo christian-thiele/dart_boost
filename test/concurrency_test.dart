@@ -151,7 +151,7 @@ Future _semaphoreDebounceTest() async {
 Future<void> _lazyTest() async {
   final lazy = Lazy(() async {
     await Future.delayed(const Duration(seconds: 1));
-    return Random().nextInt(1024);
+    return Random().nextInt(2048);
   });
 
   final results = await Future.wait(
@@ -159,6 +159,10 @@ Future<void> _lazyTest() async {
 
   expect(results.length, equals(5));
   expect(results, everyElement(equals(results.first)));
+
+  lazy.invalidate();
+  expect(lazy.isInitialized, isFalse);
+  expect(await lazy.get(), isNot(equals(results.first)));
 
   final errorLazy = Lazy(() async {
     await Future.delayed(const Duration(seconds: 1));

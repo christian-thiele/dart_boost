@@ -17,7 +17,7 @@ class Lazy<T> {
   final FutureOr<T> Function() _initialize;
   bool _initialized = false;
   dynamic _error;
-  late final T _value;
+  late T _value;
 
   Lazy(this._initialize);
 
@@ -53,5 +53,10 @@ class Lazy<T> {
 
       return _value;
     });
+  }
+
+  void invalidate() {
+    _initialized = false;
+    _error = null;
   }
 }

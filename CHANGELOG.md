@@ -1,3 +1,7 @@
+## 1.8.7
+- Lazy
+  - invalidate
+
 ## 1.8.6
 - Lazy
 - Semaphore
