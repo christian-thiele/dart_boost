@@ -176,6 +176,19 @@ extension IterableExtension<TValue> on Iterable<TValue> {
   /// TCast while also casting those elements to that type.
   Iterable<TCast> whereIs<TCast>() =>
       where((element) => element is TCast).cast<TCast>();
+
+  /// Returns an [Iterable] containing the results of all elements processed
+  /// by the [toElement] function.
+  ///
+  /// This method works like `map` but provides the [toElement] function with
+  /// the elements index as second argument.
+  Iterable<TResult> mapIndexed<TResult>(
+      TResult Function(TValue, int) toElement) sync* {
+    var i = 0;
+    for (final e in this) {
+      yield toElement(e, i++);
+    }
+  }
 }
 
 extension ListExtension<TValue> on List<TValue> {
