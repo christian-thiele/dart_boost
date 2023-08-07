@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/boost.iml" filepath="$PROJECT_DIR$/boost.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/dart_boost.iml" filepath="$PROJECT_DIR$/.idea/dart_boost.iml" />
     </modules>
   </component>
 </project>

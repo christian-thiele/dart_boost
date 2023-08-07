@@ -11,7 +11,8 @@ void main() {
   test('Semaphore.runLocked', _semaphoreTest);
   test('Semaphore.debounce', _semaphoreDebounceTest);
   test('Semaphore.throttle', _semaphoreThrottleTest);
-  test('Lazy', _lazyTest, timeout: Timeout.none);
+  test('Lazy', _lazyTest);
+  test('Lazy.reinitialize', _lazyReinitializeTest, timeout: Timeout.none);
 }
 
 Future _runGuardedTest() async {
@@ -173,4 +174,33 @@ Future<void> _lazyTest() async {
   expect(errorLazy.get, throwsA(isA<Exception>()));
   expect(errorLazy.get, throwsA(isA<Exception>()));
   expect(errorLazy.get, throwsA(isA<Exception>()));
+}
+
+Future<void> _lazyReinitializeTest() async {
+  final seq = [false, true, false].iterator;
+
+  final lazy = Lazy<bool>(
+    () {
+      seq.moveNext();
+      return seq.current;
+    },
+    reinitializeOnValue: (value) => !value,
+  );
+
+  expect([await lazy.get(), await lazy.get(), await lazy.get()],
+      orderedEquals([false, true, true]));
+
+  final errorSeq = [null, 1, 2].iterator;
+  final errorLazy = Lazy<int>(
+    () {
+      errorSeq.moveNext();
+      return errorSeq.current ?? (throw Exception('Supposed to fail.'));
+    },
+    reinitializeOnError: true,
+  );
+
+  expect(() async => await errorLazy.get(), throwsA(isA<Exception>()));
+  expect(await errorLazy.get(), equals(1));
+  expect(await errorLazy.get(), equals(1));
+  expect(await errorLazy.get(), equals(1));
 }
