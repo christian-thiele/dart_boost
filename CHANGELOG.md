@@ -1,3 +1,8 @@
+## 1.8.9
+- Lazy
+  - reinitializeOnValue
+  - reinitializeOnError
+
 ## 1.8.8
 - IterableExtension
   - mapIndexed
