@@ -49,4 +49,17 @@ extension IntListStreamExtension on Stream<List<int>> {
 
     return map((event) => event.asUint8List());
   }
+
+  /// Concatenates all of the List<int> chunks from this stream to a Uint8List.
+  ///
+  /// When this stream is done, the returned future is completed.
+  /// For an empty stream, the future is completed with an empty Uint8List.
+  ///
+  /// If this stream emits an error the returned future is completed with that
+  /// error, and processing is stopped.
+  Future<Uint8List> collect() async {
+    final builder =
+        await fold<BytesBuilder>(BytesBuilder(), (p, e) => p..add(e));
+    return builder.takeBytes();
+  }
 }
