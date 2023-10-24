@@ -22,6 +22,21 @@ void _collectTest() async {
   final bytes = await byteStream.collect();
   expect(
       bytes,
-      orderedEquals(
-          [22, 255, 0, 32, 12, 255, 0, 22, 12, 32, 22, 255, 0, 32, 12,]));
+      orderedEquals([
+        22,
+        255,
+        0,
+        32,
+        12,
+        255,
+        0,
+        22,
+        12,
+        32,
+        22,
+        255,
+        0,
+        32,
+        12,
+      ]));
 }

@@ -58,7 +58,8 @@ extension IntListStreamExtension on Stream<List<int>> {
   /// If this stream emits an error the returned future is completed with that
   /// error, and processing is stopped.
   Future<Uint8List> collect() async {
-    final builder = await fold<BytesBuilder>(BytesBuilder(), (p, e) => p..add(e));
+    final builder =
+        await fold<BytesBuilder>(BytesBuilder(), (p, e) => p..add(e));
     return builder.takeBytes();
   }
 }
