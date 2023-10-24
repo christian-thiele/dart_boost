@@ -1,3 +1,7 @@
+## 1.8.10
+- Bytes
+  - collect
+
 ## 1.8.9
 - Lazy
   - reinitializeOnValue
